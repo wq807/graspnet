@@ -9,3 +9,4 @@ graspnet-baseline/logs/
 *.png
 scene_point_cloud.npy
 grasp_result_*.jpg
+ur5_mujoco_control/mujoco_menagerie/
