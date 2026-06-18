@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+control_env/
+graspnet-baseline/logs/
+*.pth
+*.npy
+*.jpg
+*.png
+scene_point_cloud.npy
+grasp_result_*.jpg

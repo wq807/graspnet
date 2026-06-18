@@ -1,0 +1,175 @@
+<mujoco model="ur5e_with_gripper">
+    <compiler angle="radian" autolimits="true"/>
+    <option integrator="implicitfast" cone="elliptic"/>
+
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+        </default>
+        <default class="collision">
+            <geom type="capsule" group="3"/>
+            <default class="eef_collision">
+                <geom type="cylinder"/>
+            </default>
+        </default>
+        
+        <default class="ur5e">
+            <material rgba="0.5 0.5 0.5 1"/>
+            <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1" damping="200"/>
+            <position kp="2000" forcerange="-6.28319 6.28319"/>
+            <default class="ur5e_size3">
+                <joint armature="0.2" damping="400"/>
+                <position kp="5000"/>
+            </default>
+            <default class="ur5e_size2">
+                <joint armature="0.1" damping="200"/>
+                <position kp="3000"/>
+            </default>
+            <default class="ur5e_size1">
+                <joint armature="0.06" damping="100"/>
+                <position kp="1500"/>
+            </default>
+            <default class="ur5e_visual">
+                <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+            </default>
+            <default class="ur5e_collision">
+                <geom type="capsule" group="3"/>
+            </default>
+        </default>
+
+        <default class="grip_2f85">
+            <mesh scale="0.001 0.001 0.001"/>
+            <general biastype="affine"/>
+            <default class="grip_visual">
+                <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+            </default>
+            <default class="grip_collision">
+                <geom type="mesh" group="3"/>
+            </default>
+            <default class="grip_ext_force">
+                <geom type="mesh" group="3" rgba="0 0 0 0"/>
+            </default>
+        </default>
+    </default>
+
+    <asset>
+        <mesh name="ur5e_base_0" file="mujoco_menagerie/universal_robots_ur5e/assets/base_0.obj"/>
+        <mesh name="ur5e_base_1" file="mujoco_menagerie/universal_robots_ur5e/assets/base_1.obj"/>
+        <mesh name="ur5e_shoulder" file="mujoco_menagerie/universal_robots_ur5e/assets/shoulder.obj"/>
+        <mesh name="ur5e_upperarm_0" file="mujoco_menagerie/universal_robots_ur5e/assets/upperarm_0.obj"/>
+        <mesh name="ur5e_upperarm_1" file="mujoco_menagerie/universal_robots_ur5e/assets/upperarm_1.obj"/>
+        <mesh name="ur5e_forearm_0" file="mujoco_menagerie/universal_robots_ur5e/assets/forearm_0.obj"/>
+        <mesh name="ur5e_forearm_1" file="mujoco_menagerie/universal_robots_ur5e/assets/forearm_1.obj"/>
+        <mesh name="ur5e_forearm_2" file="mujoco_menagerie/universal_robots_ur5e/assets/forearm_2.obj"/>
+        <mesh name="ur5e_forearm_3" file="mujoco_menagerie/universal_robots_ur5e/assets/forearm_3.obj"/>
+        <mesh name="ur5e_wrist1_0" file="mujoco_menagerie/universal_robots_ur5e/assets/wrist1_0.obj"/>
+        <mesh name="ur5e_wrist1_1" file="mujoco_menagerie/universal_robots_ur5e/assets/wrist1_1.obj"/>
+        <mesh name="ur5e_wrist1_2" file="mujoco_menagerie/universal_robots_ur5e/assets/wrist1_2.obj"/>
+        <mesh name="ur5e_wrist2_0" file="mujoco_menagerie/universal_robots_ur5e/assets/wrist2_0.obj"/>
+        <mesh name="ur5e_wrist2_1" file="mujoco_menagerie/universal_robots_ur5e/assets/wrist2_1.obj"/>
+        <mesh name="ur5e_wrist2_2" file="mujoco_menagerie/universal_robots_ur5e/assets/wrist2_2.obj"/>
+        <mesh name="ur5e_wrist3" file="mujoco_menagerie/universal_robots_ur5e/assets/wrist3.obj"/>
+
+        <mesh name="grip_base_mount" file="mujoco_menagerie/robotiq_2f85/assets/base_mount.stl"/>
+        <mesh name="grip_base" file="mujoco_menagerie/robotiq_2f85/assets/base.stl"/>
+        <mesh name="grip_driver" file="mujoco_menagerie/robotiq_2f85/assets/driver.stl"/>
+        <mesh name="grip_coupler" file="mujoco_menagerie/robotiq_2f85/assets/coupler.stl"/>
+        <mesh name="grip_follower" file="mujoco_menagerie/robotiq_2f85/assets/follower.stl"/>
+        <mesh name="grip_pad" file="mujoco_menagerie/robotiq_2f85/assets/pad.stl"/>
+        <mesh name="grip_silicone_pad" file="mujoco_menagerie/robotiq_2f85/assets/silicone_pad.stl"/>
+        <mesh name="grip_spring_link" file="mujoco_menagerie/robotiq_2f85/assets/spring_link.stl"/>
+
+        <material name="ur5e_black" rgba="0.033 0.033 0.033 1"/>
+        <material name="ur5e_jointgray" rgba="0.278 0.278 0.278 1"/>
+        <material name="ur5e_linkgray" rgba="0.82 0.82 0.82 1"/>
+        <material name="ur5e_urblue" rgba="0.49 0.678 0.8 1"/>
+
+        <material name="grip_metal" rgba="0.58 0.58 0.58 1"/>
+        <material name="grip_silicone" rgba="0.1882 0.1882 0.1882 1"/>
+        <material name="grip_black" rgba="0.033 0.033 0.033 1"/>
+    </asset>
+
+    <worldbody>
+        <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5.0" dir="0 0 -1"/>
+        <geom name="floor" type="plane" size="2 2 0.1" rgba=".9 .9 .9 1"/>
+        <body name="table" pos="0.5 0 0.2">
+            <geom name="table_top" type="box" size="0.4 0.4 0.1" rgba="0.5 0.5 0.5 1"/>
+        </body>
+
+        <body name="ur5e_base" childclass="ur5e" pos="0 0 0.3">
+            <geom class="ur5e_visual" mesh="ur5e_base_0" material="ur5e_black"/>
+            <geom class="ur5e_visual" mesh="ur5e_base_1" material="ur5e_jointgray"/>
+            <geom class="ur5e_collision" type="cylinder" size="0.06 0.02" pos="0 0 0.02"/>
+            <body name="ur5e_shoulder_link" pos="0 0 0.163">
+                <joint name="ur5e_shoulder_pan_joint" class="ur5e_size3" axis="0 0 1"/>
+                <geom class="ur5e_visual" mesh="ur5e_shoulder" material="ur5e_jointgray"/>
+                <geom class="ur5e_collision" type="cylinder" size="0.06 0.06" pos="0 0 0"/>
+                <body name="ur5e_upper_arm_link" pos="0 0.138 0" quat="1 0 1 0">
+                    <joint name="ur5e_shoulder_lift_joint" class="ur5e_size3"/>
+                    <geom class="ur5e_visual" mesh="ur5e_upperarm_0" material="ur5e_linkgray"/>
+                    <geom class="ur5e_visual" mesh="ur5e_upperarm_1" material="ur5e_urblue"/>
+                    <geom class="ur5e_collision" type="cylinder" size="0.06 0.21" pos="0 0 0.21"/>
+                    <body name="ur5e_forearm_link" pos="0 -0.131 0.425">
+                        <joint name="ur5e_elbow_joint" class="ur5e_size3"/>
+                        <geom class="ur5e_visual" mesh="ur5e_forearm_0" material="ur5e_urblue"/>
+                        <geom class="ur5e_visual" mesh="ur5e_forearm_1" material="ur5e_linkgray"/>
+                        <geom class="ur5e_visual" mesh="ur5e_forearm_2" material="ur5e_black"/>
+                        <geom class="ur5e_visual" mesh="ur5e_forearm_3" material="ur5e_jointgray"/>
+                        <geom class="ur5e_collision" type="cylinder" size="0.05 0.196" pos="0 0 0.196"/>
+                        <body name="ur5e_wrist_1_link" pos="0 0 0.392" quat="1 0 1 0">
+                            <joint name="ur5e_wrist_1_joint" class="ur5e_size1"/>
+                            <geom class="ur5e_visual" mesh="ur5e_wrist1_0" material="ur5e_black"/>
+                            <geom class="ur5e_visual" mesh="ur5e_wrist1_1" material="ur5e_jointgray"/>
+                            <geom class="ur5e_visual" mesh="ur5e_wrist1_2" material="ur5e_urblue"/>
+                            <geom class="ur5e_collision" type="cylinder" size="0.04 0.04" pos="0 0 0"/>
+                            <body name="ur5e_wrist_2_link" pos="0 0.095 0">
+                                <joint name="ur5e_wrist_2_joint" class="ur5e_size1" axis="0 0 1"/>
+                                <geom class="ur5e_visual" mesh="ur5e_wrist2_0" material="ur5e_black"/>
+                                <geom class="ur5e_visual" mesh="ur5e_wrist2_1" material="ur5e_jointgray"/>
+                                <geom class="ur5e_visual" mesh="ur5e_wrist2_2" material="ur5e_urblue"/>
+                                <geom class="ur5e_collision" type="cylinder" size="0.04 0.04" pos="0 0 0"/>
+                                <body name="ur5e_wrist_3_link" pos="0 0 0.095">
+                                    <joint name="ur5e_wrist_3_joint" class="ur5e_size1"/>
+                                    <geom class="ur5e_visual" mesh="ur5e_wrist3" material="ur5e_linkgray"/>
+                                    <geom class="ur5e_collision" type="cylinder" size="0.04 0.015" pos="0 0 -0.015"/>
+                                    
+                                    <body name="ur5e_attachment" pos="0 0.08 0" quat="0.707107 0.707107 0 0">
+                                        <body name="grip_base" childclass="grip_2f85">
+                                            <geom class="grip_visual" mesh="grip_base_mount" material="grip_black"/>
+                                            <geom class="grip_collision" mesh="grip_base_mount"/>
+                                            <body name="grip_base_lip" pos="0 0 0.0166" quat="0.707107 0 0 0.707107">
+                                                <geom class="grip_visual" mesh="grip_base" material="grip_metal"/>
+                                                <geom class="grip_collision" mesh="grip_base"/>
+                                                
+                                                <body name="grip_left_driver" pos="0 0.0306011 0.054904">
+                                                    <joint name="grip_left_driver_joint" axis="1 0 0" range="0 0.8" armature="0.005" damping="0.1"/>
+                                                    <geom class="grip_visual" mesh="grip_driver" material="grip_black"/>
+                                                    <geom class="grip_collision" mesh="grip_driver"/>
+                                                </body>
+                                                <body name="grip_right_driver" pos="0 -0.0306011 0.054904" quat="0 0 0 1">
+                                                    <joint name="grip_right_driver_joint" axis="1 0 0" range="0 0.8" armature="0.005" damping="0.1"/>
+                                                    <geom class="grip_visual" mesh="grip_driver" material="grip_black"/>
+                                                    <geom class="grip_collision" mesh="grip_driver"/>
+                                                </body>
+                                            </body>
+                                        </body>
+                                    </body>
+                                </td>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <position name="ur5e_shoulder_pan" joint="ur5e_shoulder_pan_joint" class="ur5e_size3"/>
+        <position name="ur5e_shoulder_lift" joint="ur5e_shoulder_lift_joint" class="ur5e_size3"/>
+        <position name="ur5e_elbow" joint="ur5e_elbow_joint" class="ur5e_size3"/>
+        <position name="ur5e_wrist_1" joint="ur5e_wrist_1_joint" class="ur5e_size1"/>
+        <position name="ur5e_wrist_2" joint="ur5e_wrist_2_joint" class="ur5e_size1"/>
+        <position name="ur5e_wrist_3" joint="ur5e_wrist_3_joint" class="ur5e_size1"/>
+        <position name="grip_fingers" joint="grip_left_driver_joint" ctrlrange="0 0.8" kp="20" forcerange="0 0.8"/>
+    </actuator>
+</mujoco>
