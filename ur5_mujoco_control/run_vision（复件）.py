@@ -215,13 +215,6 @@ if best_grasp["success"]:
     
     grasp_center_world = R_cv2world @ grasp_center_cam + cam_pos
     R_grasp_world = R_cv2world @ R_grasp_cam
-    
-    # ========== 抓取点横向偏移补偿 ==========
-    # 单位：米，建议每次微调 2~5 毫米 (0.002~0.005)
-    # Y轴：左右方向；X轴：前后方向；Z轴：上下方向
-    grasp_center_world[1] += 0.005  # 示例：抓取点整体向右偏移 5 毫米
-    # grasp_center_world[0] += 0.003  # 如需前后方向补偿，取消注释并调整数值
-    # ======================================
 
     # =========================================================
     # 5. 原生 MuJoCo IK 求解 & OMPL 路径规划

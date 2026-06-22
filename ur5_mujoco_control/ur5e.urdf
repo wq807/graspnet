@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="ur5e_with_gripper">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://universal_robots_ur5e/assets/base_0.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.06"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.02"/>
+    </collision>
+  </link>
+
+  <joint name="shoulder_pan_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="shoulder_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.163"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="150.0" lower="-6.28319" upper="6.28319" velocity="3.14"/>
+  </joint>
+
+  <link name="shoulder_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://universal_robots_ur5e/assets/shoulder.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.12" radius="0.06"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="shoulder_lift_joint" type="revolute">
+    <parent link="shoulder_link"/>
+    <child link="upper_arm_link"/>
+    <origin rpy="1.570796327 0 0" xyz="0 0.138 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="150.0" lower="-6.28319" upper="6.28319" velocity="3.14"/>
+  </joint>
+
+  <link name="upper_arm_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://universal_robots_ur5e/assets/upperarm_0.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.425" radius="0.06"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.2125"/>
+    </collision>
+  </link>
+
+  <joint name="elbow_joint" type="revolute">
+    <parent link="upper_arm_link"/>
+    <child link="forearm_link"/>
+    <origin rpy="0 0 0" xyz="0 -0.131 0.425"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="150.0" lower="-6.28319" upper="6.28319" velocity="3.14"/>
+  </joint>
+
+  <link name="forearm_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://universal_robots_ur5e/assets/forearm_0.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.392" radius="0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.196"/>
+    </collision>
+  </link>
+
+  <joint name="wrist_1_joint" type="revolute">
+    <parent link="forearm_link"/>
+    <child link="wrist_1_link"/>
+    <origin rpy="1.570796327 0 0" xyz="0 0 0.392"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="28.0" lower="-6.28319" upper="6.28319" velocity="6.28"/>
+  </joint>
+
+  <link name="wrist_1_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://universal_robots_ur5e/assets/wrist1_0.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.08" radius="0.04"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="wrist_2_joint" type="revolute">
+    <parent link="wrist_1_link"/>
+    <child link="wrist_2_link"/>
+    <origin rpy="0 0 0" xyz="0 0.095 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="28.0" lower="-6.28319" upper="6.28319" velocity="6.28"/>
+  </joint>
+
+  <link name="wrist_2_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://universal_robots_ur5e/assets/wrist2_0.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.08" radius="0.04"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="wrist_3_joint" type="revolute">
+    <parent link="wrist_2_link"/>
+    <child link="wrist_3_link"/>
+    <origin rpy="1.570796327 0 0" xyz="0 0 0.095"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="28.0" lower="-6.28319" upper="6.28319" velocity="6.28"/>
+  </joint>
+
+  <link name="wrist_3_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://universal_robots_ur5e/assets/wrist3.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.02" radius="0.04"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.01"/>
+    </collision>
+  </link>
+
+  <joint name="wrist_3_link-tool0_fixed_joint" type="fixed">
+    <parent link="wrist_3_link"/>
+    <child link="tool0"/>
+    <origin rpy="0 0 0" xyz="0 0.082 0"/> </joint>
+  
+  <link name="tool0"/>
+
+  <joint name="tool0-gripper_fixed_joint" type="fixed">
+    <parent link="tool0"/>
+    <child link="gripper_body"/>
+    <origin rpy="0 1.570796327 0" xyz="0 0 0"/> 
+  </joint>
+
+  <link name="gripper_body">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.15"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.075"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.11 0.11 0.15"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.075"/>
+    </collision>
+  </link>
+  <joint name="gripper_body-tcp_fixed_joint" type="fixed">
+    <parent link="gripper_body"/>
+    <child link="tcp_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.15"/>
+  </joint>
+  
+  <link name="tcp_link"/>
+</robot>
